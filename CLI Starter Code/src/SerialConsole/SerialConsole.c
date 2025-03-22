@@ -149,10 +149,25 @@ void setLogLevel(enum eDebugLogLevels debugLevel)
 /**
  * @brief Logs a message at the specified debug level.
  */
-void LogMessage(enum eDebugLogLevels level, const char *format, ...)
-{
-    // Todo: Implement Debug Logger
-	// More detailed descriptions are in header file
+void LogMessage(enum eDebugLogLevels level, const char *format, ...) {
+	if (level < currentDebugLevel) {
+		return;  // Ignore messages below the debug level
+	}
+
+	static const char *levelStr[] = {
+		"[INFO] ", "[DEBUG] ", "[WARNING] ", "[ERROR] ", "[FATAL] "
+	};
+
+	char logBuffer[256];  // Buffer for the final log message
+	strcpy(logBuffer, levelStr[level]);  // Copy the log level prefix
+
+	va_list args;
+	va_start(args, format);
+	vsprintf(logBuffer + strlen(logBuffer), format, args);  // Append formatted message
+	va_end(args);
+
+	SerialConsoleWriteString(logBuffer);  // Print to serial console
+	SerialConsoleWriteString("\r\n");  // Add newline for readability
 }
 
 /*
