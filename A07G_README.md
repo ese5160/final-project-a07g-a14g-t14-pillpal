@@ -8,6 +8,53 @@
 
 ### Software Architecture
 
+#### Hardware Requirements Specifications
+
+(HR 01): Microcontroller Core
+The project shall be based on the SAMW25 microcontroller module.
+
+(HR 02): Access control for healthcare workers
+An RFID reader shall be used for access control. The reader shall authenticate RFID tags at a maximum distance of 5 cm and communicate with the microcontroller via I2C.
+
+(HR 03): Stepper motor specification
+If the RFID tag matches the reader, the lid of the main compartment shall open, which is controlled by a solenoid lock connected using an N-channel MOSFET and flyback diodes across the solenoid's terminals.
+
+(HR 04): Regarding the action of the dispenser
+The pill will be dispensed using a carousel design. A rotating disc is aligned with a dispensing chute. The disc rotates using a stepper motor to position the correct slot over the chute at the scheduled time, controlled by the RTC.
+
+(HR 05): Dose alerts
+The device shall include a buzzer for audio notifications. The buzzer shall produce a sound output of at least 65 dB at 50 cm and shall be activated for dose alerts.
+
+(HR 06): Power Management
+A Lithium Ion Cylindrical Battery - 3.7V, 2200mAh shall be used as the power source. The battery shall be parallely connected to a Boost Convert (6V) and a Buck Converter (3.3V).
+
+(HR 07): Structure of the dispenser
+The device enclosure shall have dimensions of 30 x 30 x 45 cm and be made of acrylic. It shall include a transparent lid to check pill availability without opening the device. The dispenser mechanism will be 3d printed.
+
+(HR 08): Internet Connectivity
+The pill dispenser shall use 802.11 b/g/n Wi-Fi for communication with cloud services.
+
+(HR 09): Low power indication
+The device should feature two LEDs to display operational states such as low power and low wifi connectivity.
+
+(HR 10): Pill weighing action
+A load cell should be used to measure the weight of the pills when they are refilled. It should approximately be equal to the total weight of the dosage over a month.
+
+(HR 11): Checking if the pill is taken
+A load cell/force sensor should be placed at the end of the dispenser to check if the patient picks up the pill
+
+#### Software Requirements Specifications
+
+(SRS 01): A notification shall be sent to the patient when they need to take their medication. An RTC timer will be used to send notifications and dispense the pill.
+
+(SRS 02): A reminder notification shall be sent in 5 minutes if the patient has not taken their medication.
+
+(SRS 03): A counter shall keep track of the number of pills left in the dispenser and alert the patient and provider when there is 1 week of medication left for the user. The counter subtracts the pill amount every time the stepper motor dispenses the pill. When the RFID is used, the counter resets to the maximum number of pills.
+
+(SRS 04): A schedule shall be set by the provider to send reminders for taking pills.
+
+(SRS 05): A boolean value should store information about whether the pill was picked up from the load cell.
+
 ### Understanding Starter Code
 
 #### 1. What does “InitializeSerialConsole()” do? In said function, what is “cbufRx” and “cbufTx”? What type of data structure is it? 
