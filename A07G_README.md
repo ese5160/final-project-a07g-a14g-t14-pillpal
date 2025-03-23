@@ -17,7 +17,7 @@ The project shall be based on the SAMW25 microcontroller module.
 An RFID reader shall be used for access control. The reader shall authenticate RFID tags at a maximum distance of 5 cm and communicate with the microcontroller via I2C.
 
 (HR 03): Stepper motor specification
-If the RFID tag matches the reader, the lid of the main compartment shall open, which is controlled by a solenoid lock connected using an N-channel MOSFET and flyback diodes across the solenoid's terminals.
+If the RFID tag matches the reader, the lid of the main compartment shall open, which is controlled by a 5V servo motor.
 
 (HR 04): Regarding the action of the dispenser
 The pill will be dispensed using a carousel design. A rotating disc is aligned with a dispensing chute. The disc rotates using a stepper motor to position the correct slot over the chute at the scheduled time, controlled by the RTC.
@@ -26,21 +26,24 @@ The pill will be dispensed using a carousel design. A rotating disc is aligned w
 The device shall include a buzzer for audio notifications. The buzzer shall produce a sound output of at least 65 dB at 50 cm and shall be activated for dose alerts.
 
 (HR 06): Power Management
-A Lithium Ion Cylindrical Battery - 3.7V, 2200mAh shall be used as the power source. The battery shall be parallely connected to a Boost Convert (6V) and a Buck Converter (3.3V).
+A Lithium Ion Cylindrical Battery - 3.7V, 2200mAh shall be used as the power source. The battery shall be parallely connected to a Boost Converter (5V) and a Buck Converter (3.3V).
 
 (HR 07): Structure of the dispenser
+The dispensing mechanism shall consist of two similar discs joined with an axle. The disc on the top will have 30 slots along its circumference where the pills will be placed and the lower disc will have 1 slot which shall align with one of the slots on the other disc to dispense the pill.
+
+(HR 08): Structure of the enclosure
 The device enclosure shall have dimensions of 30 x 30 x 45 cm and be made of acrylic. It shall include a transparent lid to check pill availability without opening the device. The dispenser mechanism will be 3d printed.
 
-(HR 08): Internet Connectivity
+(HR 09): Internet Connectivity
 The pill dispenser shall use 802.11 b/g/n Wi-Fi for communication with cloud services.
 
-(HR 09): Low power indication
+(HR 10): Low power indication
 The device should feature two LEDs to display operational states such as low power and low wifi connectivity.
 
-(HR 10): Pill weighing action
+(HR 11): Pill weighing action
 A load cell should be used to measure the weight of the pills when they are refilled. It should approximately be equal to the total weight of the dosage over a month.
 
-(HR 11): Checking if the pill is taken
+(HR 12): Checking if the pill is taken
 A load cell/force sensor should be placed at the end of the dispenser to check if the patient picks up the pill
 
 #### Software Requirements Specifications
@@ -51,9 +54,27 @@ A load cell/force sensor should be placed at the end of the dispenser to check i
 
 (SRS 03): A counter shall keep track of the number of pills left in the dispenser and alert the patient and provider when there is 1 week of medication left for the user. The counter subtracts the pill amount every time the stepper motor dispenses the pill. When the RFID is used, the counter resets to the maximum number of pills.
 
-(SRS 04): A schedule shall be set by the provider to send reminders for taking pills.
+(SRS 04): The microcontroller shall control the servo motor to open the lid of the compartment only after successful RFID authentication.
 
-(SRS 05): A boolean value should store information about whether the pill was picked up from the load cell.
+(SRS 05): A schedule shall be set by the provider to send reminders for taking pills and the stepper motor should be activated accordingly.
+
+(SRS 06): The microcontroller shall log each successful activation of the servo and stepper motor, including timestamps, to maintain an activity history.
+
+(SRS 07): If the servo motor fails to open the lid after authentication, the system shall alert the user and log the incident for troubleshooting.
+
+(SRS 08): A boolean value should store information about whether the pill was picked up from the load cell.  
+
+#### Block diagram  
+
+#### Flowcharts  
+1. High Level Flowchart 
+![High Level Flowchart](media/HighLevel_flowchart.drawio.png)  
+
+2. RFID Authentication + Lid Unlocking
+![RFID Auth & Lid Unlocking](media/LidUnlockLogic.jpg)  
+
+3. RTC-based Dispensing + Pickup Detection + Reminder  
+
 
 ### Understanding Starter Code
 
