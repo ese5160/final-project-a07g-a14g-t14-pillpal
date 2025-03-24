@@ -62,6 +62,8 @@ struct usart_module usart_instance;
 char rxCharacterBuffer[RX_BUFFER_SIZE]; 			   ///< Buffer to store received characters
 char txCharacterBuffer[TX_BUFFER_SIZE]; 			   ///< Buffer to store characters to be sent
 enum eDebugLogLevels currentDebugLevel = LOG_INFO_LVL; ///< Default debug level
+SemaphoreHandle_t xRxSemaphore = NULL;
+
 
 /******************************************************************************
  * Global Functions
@@ -230,9 +232,12 @@ void usart_read_callback(struct usart_module *const usart_module)
 {
 	// Store received char from 'latestRx' into RX buffer
 	circular_buf_put(cbufRx, latestRx);
+	BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+	xSemaphoreGiveFromISR(xRxSemaphore, &xHigherPriorityTaskWoken);
 
 	// Restart next read job so we continuously receive
 	usart_read_buffer_job(&usart_instance, (uint8_t *)&latestRx, 1);
+	portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
 }
 
 

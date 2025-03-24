@@ -18,6 +18,8 @@
 /******************************************************************************
  * Variables
  ******************************************************************************/
+SemaphoreHandle_t xRxSemaphore;
+
 static int8_t *const pcWelcomeMessage =
     "FreeRTOS CLI.\r\nType Help to view a list of registered commands.\r\n";
 
@@ -216,8 +218,12 @@ void vCommandConsoleTask(void *pvParameters)
  *****************************************************************************/
 static void FreeRTOS_read(char *character)
 {
-    // ToDo: Complete this function
-    vTaskSuspend(NULL); // We suspend ourselves. Please remove this when doing your code
+    // Wait indefinitely until a character is received
+    if (xSemaphoreTake(xRxSemaphore, portMAX_DELAY) == pdTRUE)
+    {
+	    // Read one character from the RX buffer
+	    SerialConsoleReadCharacter((uint8_t *)character);
+    }
 }
 
 /******************************************************************************
@@ -239,6 +245,8 @@ BaseType_t xCliClearTerminalScreen(char *pcWriteBuffer, size_t xWriteBufferLen, 
 // Example CLI Command. Resets system.
 BaseType_t CLI_ResetDevice(int8_t *pcWriteBuffer, size_t xWriteBufferLen, const int8_t *pcCommandString)
 {
-    system_reset();
+    SerialConsoleWriteString("Resetting device...\r\n");
+    vTaskDelay(pdMS_TO_TICKS(100)); // Give UART time to finish
+	system_reset();
     return pdFALSE;
 }

@@ -103,6 +103,10 @@ static void StartTasks(void)
 	SerialConsoleWriteString(bufferPrint);
 
 	// CODE HERE: Initialize any Tasks in your system here
+	xRxSemaphore = xSemaphoreCreateCounting(512, 0);  // Max 512 characters
+	if (xRxSemaphore == NULL) {
+		SerialConsoleWriteString("ERROR: Failed to create CLI RX semaphore!\r\n");
+	}
 
 	if (xTaskCreate(vCommandConsoleTask, "CLI_TASK", CLI_TASK_SIZE, NULL, CLI_PRIORITY, &cliTaskHandle) != pdPASS)
 	{

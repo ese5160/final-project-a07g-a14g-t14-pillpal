@@ -47,6 +47,12 @@
 	 N_DEBUG_LEVELS  = 6  /**< Maximum number of log levels */
  };
 
+/****************************************************************************** 
+ * Global Variables 
+ ******************************************************************************/
+
+/// Semaphore to signal the CLI thread when a new character is received
+extern SemaphoreHandle_t xRxSemaphore; 
 /******************************************************************************
 * Global Function Declarations
 ******************************************************************************/
