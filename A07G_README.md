@@ -118,10 +118,10 @@ The function StartTasks is used to initialize application tasks in the function.
 ### Wiretap the convo!  
 
 #### 1. What nets must you attach the logic analyzer to? (Check how the firmware sets up the UART in SerialConsole.c!)  
-The UART nets to probe are PA08 (TX) and PA09 (RX).  
+USART_RX is attached to PB11 and USART_TX is attached to PB10. 
 
 #### 2. Where on the circuit board can you attach/solder to?  
-We can 
+We can use test points or headers such as the EDBG RX abd EDBG TX or PB22 and PB23. We can also use vias or test points. 
 
 #### 3. What are critical settings for the logic analyzer?
-
+Critical settings are the baud rate, voltage level, sampling rate, and channels to use.
