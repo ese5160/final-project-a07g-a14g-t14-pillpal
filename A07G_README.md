@@ -67,14 +67,20 @@ A load cell/force sensor should be placed at the end of the dispenser to check i
 #### Block diagram  
 
 #### Flowcharts  
-1. High Level Flowchart 
+1. High Level Flowchart  
 ![High Level Flowchart](media/HighLevel_flowchart.drawio.png)  
 
-2. RFID Authentication + Lid Unlocking
+2. RFID Authentication + Lid Unlocking  
 ![RFID Auth & Lid Unlocking](media/LidUnlockLogic.jpg)  
 
-3. RTC-based Dispensing + Pickup Detection + Reminder  
+3. RTC-based Dispensing + Pickup Detection + Reminder   
+![Dispensing](media/Dispensing.jpg)  
 
+4. Low Battery Alerts  
+![Low Battery](<media/Low Battery Detection logic.jpg>)  
+
+5. Wi-Fi connectivity  
+![WiFi sync logic](<WiFi sync.jpg>)  
 
 ### Understanding Starter Code
 
