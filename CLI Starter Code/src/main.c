@@ -79,9 +79,10 @@ int main(void)
 	 LogMessage(LOG_FATAL_LVL, "Error! Temperature over %d Degrees!\r\n", 55); // This should print
 
 	 LogMessage(LOG_INFO_LVL, "ESE5160 CLI STARTER PROJECT STARTED\r\n");
+     LogMessage(LOG_ERROR_LVL,"System error!\r\n", 55); //This should print , since they are the same level
 
 	// Start FreeRTOS scheduler.
-	vTaskStartScheduler();
+	 vTaskStartScheduler();
 
 	while (1)
 		;
@@ -126,7 +127,7 @@ void vApplicationDaemonTaskStartupHook(void *ucParameterToPass) // vApplicationD
 {
 
 	// CODE HERE: Initialize any HW here
-
+    
 	// Initialize tasks
 	StartTasks();
 }

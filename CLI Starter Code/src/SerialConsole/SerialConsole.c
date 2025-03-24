@@ -150,24 +150,17 @@ void setLogLevel(enum eDebugLogLevels debugLevel)
  * @brief Logs a message at the specified debug level.
  */
 void LogMessage(enum eDebugLogLevels level, const char *format, ...) {
-	if (level < currentDebugLevel) {
-		return;  // Ignore messages below the debug level
-	}
+	if (level >=currentDebugLevel) {
 
-	static const char *levelStr[] = {
-		"[INFO] ", "[DEBUG] ", "[WARNING] ", "[ERROR] ", "[FATAL] "
-	};
-
+	
 	char logBuffer[256];  // Buffer for the final log message
-	strcpy(logBuffer, levelStr[level]);  // Copy the log level prefix
 
 	va_list args;
 	va_start(args, format);
-	vsprintf(logBuffer + strlen(logBuffer), format, args);  // Append formatted message
-	va_end(args);
+	vsprintf(logBuffer, format, args);  // Append formatted message
 
 	SerialConsoleWriteString(logBuffer);  // Print to serial console
-	SerialConsoleWriteString("\r\n");  // Add newline for readability
+}
 }
 
 /*
@@ -235,8 +228,13 @@ static void configure_usart_callbacks(void)
  *****************************************************************************/
 void usart_read_callback(struct usart_module *const usart_module)
 {
-	// ToDo: Complete this function 
+	// Store received char from 'latestRx' into RX buffer
+	circular_buf_put(cbufRx, latestRx);
+
+	// Restart next read job so we continuously receive
+	usart_read_buffer_job(&usart_instance, (uint8_t *)&latestRx, 1);
 }
+
 
 /**************************************************************************/ 
 /**
