@@ -150,6 +150,13 @@ void setLogLevel(enum eDebugLogLevels debugLevel)
 
 /**
  * @brief Logs a message at the specified debug level.
+ * 
+ * This function formats a log message and writes it to the serial console
+ * if the specified debug level is greater than or equal to the current debug level.
+ * 
+ * @param level The debug level of the message.
+ * @param format The format string (similar to printf).
+ * @param ... Variable arguments corresponding to the format string.
  */
 void LogMessage(enum eDebugLogLevels level, const char *format, ...) {
 	if (level >=currentDebugLevel) {
