@@ -10,6 +10,8 @@
  * Includes
  ******************************************************************************/
 #include "CliThread.h"
+BaseType_t CLI_VersionCommand(int8_t *pcWriteBuffer, size_t xWriteBufferLen, const int8_t *pcCommandString);
+BaseType_t CLI_TicksCommand(int8_t *pcWriteBuffer, size_t xWriteBufferLen, const int8_t *pcCommandString);
 
 /******************************************************************************
  * Defines
@@ -18,7 +20,9 @@
 /******************************************************************************
  * Variables
  ******************************************************************************/
+#define FIRMWARE_VERSION "0.0.1"
 SemaphoreHandle_t xRxSemaphore;
+
 
 static int8_t *const pcWelcomeMessage =
     "FreeRTOS CLI.\r\nType Help to view a list of registered commands.\r\n";
@@ -31,12 +35,31 @@ const CLI_Command_Definition_t xClearScreen =
         CLI_CALLBACK_CLEAR_SCREEN,
         CLI_PARAMS_CLEAR_SCREEN};
 
+// Reset command
 static const CLI_Command_Definition_t xResetCommand =
     {
         "reset",
         "reset: Resets the device\r\n",
         (const pdCOMMAND_LINE_CALLBACK)CLI_ResetDevice,
         0};
+
+// Version
+static const CLI_Command_Definition_t xVersionCommand = {
+	"version",
+	"version: Prints the firmware version\r\n",
+	CLI_VersionCommand,
+	0
+};
+
+// Ticks
+static const CLI_Command_Definition_t xTicksCommand = {
+	"ticks",
+	"ticks: Prints the number of RTOS ticks since system startup\r\n",
+	CLI_TicksCommand,
+	0
+};
+
+
 
 /******************************************************************************
  * Forward Declarations
@@ -56,6 +79,8 @@ void vCommandConsoleTask(void *pvParameters)
 
     FreeRTOS_CLIRegisterCommand(&xClearScreen);
     FreeRTOS_CLIRegisterCommand(&xResetCommand);
+	FreeRTOS_CLIRegisterCommand(&xVersionCommand);   
+	FreeRTOS_CLIRegisterCommand(&xTicksCommand);
 
     uint8_t cRxedChar[2], cInputIndex = 0;
     BaseType_t xMoreDataToFollow;
@@ -248,5 +273,34 @@ BaseType_t CLI_ResetDevice(int8_t *pcWriteBuffer, size_t xWriteBufferLen, const 
     SerialConsoleWriteString("Resetting device...\r\n");
     vTaskDelay(pdMS_TO_TICKS(100)); // Give UART time to finish
 	system_reset();
+    return pdFALSE;
+}
+
+/**
+ * @brief CLI command that prints the firmware version.
+ *
+ * @param pcWriteBuffer Buffer to write output string
+ * @param xWriteBufferLen Size of the buffer
+ * @param pcCommandString Unused
+ * @return pdFALSE to indicate no more output
+ */
+BaseType_t CLI_VersionCommand(int8_t *pcWriteBuffer, size_t xWriteBufferLen, const int8_t *pcCommandString)
+{
+    snprintf((char *)pcWriteBuffer, xWriteBufferLen, "Firmware Version: %s\r\n", FIRMWARE_VERSION);
+    return pdFALSE;
+}
+
+/**
+ * @brief CLI command that prints the number of RTOS ticks since system start.
+ *
+ * @param pcWriteBuffer Buffer to write output string
+ * @param xWriteBufferLen Size of the buffer
+ * @param pcCommandString Unused
+ * @return pdFALSE to indicate no more output
+ */
+BaseType_t CLI_TicksCommand(int8_t *pcWriteBuffer, size_t xWriteBufferLen, const int8_t *pcCommandString)
+{
+    TickType_t ticks = xTaskGetTickCount();
+    snprintf((char *)pcWriteBuffer, xWriteBufferLen, "Ticks since start: %lu\r\n", ticks);
     return pdFALSE;
 }

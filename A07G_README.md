@@ -65,22 +65,23 @@ A load cell/force sensor should be placed at the end of the dispenser to check i
 (SRS 08): A boolean value should store information about whether the pill was picked up from the load cell.  
 
 #### Block diagram  
+![Block Diagram](A07/media/TaskBlockDiagram.jpg)  
 
 #### Flowcharts  
 1. High Level Flowchart  
-![High Level Flowchart](media/HighLevel_flowchart.drawio.png)  
+![High Level Flowchart](A07/media/HighLevel_flowchart.drawio.png)  
 
 2. RFID Authentication + Lid Unlocking  
-![RFID Auth & Lid Unlocking](media/LidUnlockLogic.jpg)  
+![RFID Auth & Lid Unlocking](A07/media/LidUnlockLogic.jpg)  
 
 3. RTC-based Dispensing + Pickup Detection + Reminder   
-![Dispensing](media/Dispensing.jpg)  
+![Dispensing](A07/media/Dispensing.jpg)  
 
 4. Low Battery Alerts  
-![Low Battery](<media/Low Battery Detection logic.jpg>)  
+![Low Battery](<A07/media/Low Battery Detection logic.jpg>)  
 
 5. Wi-Fi connectivity  
-![WiFi sync logic](<WiFi sync.jpg>)  
+![WiFi sync logic](<A07/media/WiFi sync.jpg>)  
 
 ### Understanding Starter Code
 
@@ -105,11 +106,11 @@ The usart_read_callback function is designated to handle events when a character
 The usart_read_callback() handles character reception and is called automatically when a character is received via UART. This function stores the rceived character into the circular buffer and then restarts the UART read job to make sure that the new incoming characters are processed. The cufRx is used to store characters that will be processed later. The usart_write_callback is used to handle character transmission and is called automatically when the UART finishes sending a character. The function gets the next charcter from the cbufTx and starts a new transmission or stops if the buffer is empty. The cbufTx holds characters waiting to be sent which means that multiple characters can be sent asynchronously without blocking the CPU. Basically, it retrieves and sends the next character if available. 
 
 #### 7. Draw a diagram that explains the program flow for UART receive – starting with the user typing a character and ending with how that characters ends up in the circular buffer “cbufRx”. Please make reference to specific functions in the starter code.  
-![7](<media/7.jpg>)
+![7](<A07/media/7.jpg>)
 
 
 #### 8. Draw a diagram that explains the program flow for the UART transmission – starting from a string added by the program to the circular buffer “cbufTx” and ending on characters being shown on the screen of a PC (On Teraterm, for example). Please make reference to specific functions in the starter code.  
-![8](<media/8.jpg>)
+![8](<A07/media/8.jpg>)
 
 
 #### 9. What is done on the function “startStasks()” in main.c? How many threads are started?
@@ -124,4 +125,22 @@ USART_RX is attached to PB11 and USART_TX is attached to PB10.
 We can use test points or headers such as the EDBG RX abd EDBG TX or PB22 and PB23. We can also use vias or test points. 
 
 #### 3. What are critical settings for the logic analyzer?
-Critical settings are the baud rate, voltage level, sampling rate, and channels to use.
+Critical settings are the baud rate, voltage level, sampling rate, and channels to use.  
+
+**Hardware Connections:**   
+![Hardware Connections](A07/media/20250323_231112.jpg)  
+
+**Decoded Message**  
+![Decoded Message SALAE](A07/media/IMG-20250324-WA0011.jpg)  
+
+**Capture File**: The capture file can be found here: A07\A07G.sal 
+
+### Complete the CLI  
+The code has been committed to the repo.  
+
+### Add CLI Commands  
+The code has been committed to the repo.  
+**Video demo:**  <video controls src="A07/media/IMG_5711 (1).MOV" title="Title"></video>  
+Link: https://drive.google.com/file/d/11pdy8bn9JlVl8yKcJX2VgPqdKhM1a1nb/view?usp=sharing 
+
+

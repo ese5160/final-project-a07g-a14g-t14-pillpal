@@ -12,6 +12,7 @@
 #include "SerialConsole.h"
 #include "FreeRTOS_CLI.h"
 
+#define FIRMWARE_VERSION "0.0.1"
 
 #define CLI_TASK_SIZE	256		///<STUDENT FILL
 #define CLI_PRIORITY (configMAX_PRIORITIES - 1) ///<STUDENT FILL
