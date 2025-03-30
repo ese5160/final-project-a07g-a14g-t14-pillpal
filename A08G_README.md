@@ -12,9 +12,9 @@ Screenshot of Percepio Trace
 
 ### Capture SD Card Comms
 
-Block Diagram of Hardware Setup
+[Block Diagram of Hardware Setup]
 
-Photo of your hardware connections between the SAMW25 Xplained dev board, the SD card module, and the logic analyzer:
+![Photo of your hardware connections between the SAMW25 Xplained dev board, the SD card module, and the logic analyzer](HardwareConnections.jpg)
 
 Screenshot of the decoded message
 
