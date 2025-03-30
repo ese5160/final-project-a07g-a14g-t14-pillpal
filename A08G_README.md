@@ -18,7 +18,7 @@ Screenshot of Percepio Trace
 
 Screenshot of the decoded message
 
-Capture File of SD Card Communication
+Capture File of SD Card Communication: Session 1.sal has been uploaded to github repository
 
 ### Bootloader Design
 
