@@ -16,7 +16,7 @@ The project shall be based on the SAMW25 microcontroller module.
 (HR 02): Access control for healthcare workers
 An RFID reader shall be used for access control. The reader shall authenticate RFID tags at a maximum distance of 5 cm and communicate with the microcontroller via I2C.
 
-(HR 03): Stepper motor specification
+(HR 03): Servo motor specification
 If the RFID tag matches the reader, the lid of the main compartment shall open, which is controlled by a 5V servo motor.
 
 (HR 04): Regarding the action of the dispenser
