@@ -21,4 +21,4 @@
 2. Functioning Drivers have been commited
 3. Photo of the hardware connections between custom PCBA and the actuators
 4. Stepper Motor Working: https://youtube.com/shorts/WxzedJ_tPvQ?feature=share
-   Servo Motor Working: 
+   Servo Motor Working: https://youtube.com/shorts/7c9mVrKJ9D0?feature=share
